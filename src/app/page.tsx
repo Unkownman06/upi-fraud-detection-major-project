@@ -7,9 +7,9 @@ import {
   Tooltip, ResponsiveContainer, PieChart, Pie, Cell,
 } from "recharts";
 
-const API_BASE = "http://127.0.0.1:8000/api";
+const API_BASE = "https://upi-fraud-detection-major-project.onrender.com";
 
-let accessToken = null;
+let accessToken: string | null = null;
 
 async function getToken() {
   const stored = localStorage.getItem("access_token");
