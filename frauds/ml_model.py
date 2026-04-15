@@ -179,4 +179,10 @@ class FraudDetector:
 
 
 # Module-level singleton
-detector = FraudDetector()
+detector = None
+
+def get_detector():
+    global detector
+    if detector is None:
+        detector = FraudDetector()
+    return detector
