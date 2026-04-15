@@ -28,7 +28,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 
 from .models import Transaction, OTPVerification
 from .serializers import PredictRequestSerializer, TransactionSerializer
-from .ml_model import detector
+from .ml_model import get_detector
 from django.http import HttpResponse
 
 def home(request):
@@ -70,7 +70,8 @@ def predict(request):
         "avg_amount_sender": data["avg_amount_sender"],
     }
 
-    result = detector.predict(features)
+    detector = get_detector()
+result = detector.predict(features)
     txn_status = get_status(result["risk_score"])
 
     txn = Transaction.objects.create(
@@ -139,7 +140,8 @@ def process_in_background(df, user_id, fraud_col):
                     "avg_amount_sender": avg_amt,
                 }
 
-                result = detector.predict(features)
+                detector = get_detector()
+result = detector.predict(features)
                 txn_status = get_status(result["risk_score"])
 
                 raw_txn_id = str(row.get("Transaction_ID", "")).strip()
